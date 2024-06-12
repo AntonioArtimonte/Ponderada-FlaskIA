@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Upload de imagem com I.A</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Upload de imagem para reconhecimento de algarismo</h1>
+        <form id="uploadForm" enctype="multipart/form-data" class="text-center">
+            <div class="form-group">
+                <input type="file" class="form-control-file" name="file" id="fileInput" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+        <div class="loading text-center" id="loading">Processando...</div>
+        <div class="result text-center" id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData();
+            var fileInput = document.getElementById('fileInput');
+            formData.append('file', fileInput.files[0]);
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').textContent = '';
+
+            Promise.all([
+                fetch('/upload_normal', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json()),
+
+                fetch('/upload_linear', {
+                    method: 'POST',
+                    body: formData
+                }).then(response => response.json())
+            ])
+            .then(results => {
+                const [normalData, linearData] = results;
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('result').innerHTML = `
+                    <p>Predição Modelo LeNet-5: ${normalData.predict} | Tempo Gasto: ${normalData.predict_normal_time.toFixed(6)} segundos</p>
+                    <p>Predição Modelo Linear: ${linearData.predict_linear} | Tempo Gasto: ${linearData.predict_linear_time.toFixed(6)} segundos</p>
+                `;
+            })
+            .catch(error => {
+                document.getElementById('loading').style.display = 'none';
+                console.error('Error:', error);
+                document.getElementById('result').textContent = 'Ocorreu um erro. Por favor, tente novamente.';
+                document.getElementById('result').classList.add('error');
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
