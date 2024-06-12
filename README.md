@@ -126,7 +126,7 @@ Para saber melhor como a aplicação funciona, segue um vídeo abaixo demonstran
 
 OBS: Se o vídeo não abrir, pode baixar o arquivo do mesmo em sua máquina clicando [aqui](IMG_1165.MOV)
 
-[![Vídeo](https://drive.google.com/file/d/1F2gFmfuWljoJ9ujg1uJ9DXnZZdKuzTKv/view?usp=sharing)]
+[Vídeo](https://drive.google.com/file/d/1F2gFmfuWljoJ9ujg1uJ9DXnZZdKuzTKv/view?usp=sharing)
 
 ## Autor
 
