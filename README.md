@@ -124,7 +124,9 @@ Ambos foram utilizados do jeito que estão em um arquivo `.py`, afim de diminuir
 
 Para saber melhor como a aplicação funciona, segue um vídeo abaixo demonstrando o uso da mesma
 
-[![Vídeo](IMG_1165.MOV)]
+OBS: Se o vídeo não abrir, pode baixar o arquivo do mesmo em sua máquina clicando [aqui](IMG_1165.MOV)
+
+[![Vídeo](https://drive.google.com/file/d/1F2gFmfuWljoJ9ujg1uJ9DXnZZdKuzTKv/view?usp=sharing)]
 
 ## Autor
 
